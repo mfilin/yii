@@ -392,16 +392,11 @@ class CClientScript extends CApplicationComponent
 			$html.=CHtml::css($css[0],$css[1])."\n";
 		if($this->enableJavaScript)
 		{
-			if(isset($this->scriptFiles[self::POS_HEAD]))
-			{
-				foreach($this->scriptFiles[self::POS_HEAD] as $scriptFileValueUrl=>$scriptFileValue)
-				{
-					if(is_array($scriptFileValue))
-						$html.=CHtml::scriptFile($scriptFileValueUrl,$scriptFileValue)."\n";
-					else
-						$html.=CHtml::scriptFile($scriptFileValueUrl)."\n";
-				}
-			}
+            if(isset($this->scriptFiles[self::POS_HEAD]))
+            {
+                foreach($this->scriptFiles[self::POS_HEAD] as $scriptFile)
+                    $html.=CHtml::scriptFile($scriptFile)."\n";
+            }
 
 			if(isset($this->scripts[self::POS_HEAD]))
 				$html.=$this->renderScriptBatch($this->scripts[self::POS_HEAD]);
