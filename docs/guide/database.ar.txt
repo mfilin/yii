@@ -443,7 +443,7 @@ anything coming from the client side.
 
 AR performs data validation automatically when
 [save()|CActiveRecord::save] is being invoked. The validation is based on
-the rules specified by in the [rules()|CModel::rules] method of the AR class.
+the rules specified in the [rules()|CModel::rules] method of the AR class.
 For more details about how to specify validation rules, refer to
 the [Declaring Validation Rules](/doc/guide/form.model#declaring-validation-rules)
 section. Below is the typical workflow needed by saving a record:
@@ -546,12 +546,15 @@ try
 	// we therefore use a transaction to ensure consistency and integrity
 	$post=$model->findByPk(10);
 	$post->title='new post title';
-	$post->save();
-	$transaction->commit();
+	if($post->save())
+		$transaction->commit();
+	else
+		$transaction->rollback();
 }
 catch(Exception $e)
 {
 	$transaction->rollback();
+	throw $e;
 }
 ~~~
 
